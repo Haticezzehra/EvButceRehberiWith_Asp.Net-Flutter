@@ -1,0 +1,283 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="EvButceRehberiModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="HesapHareketleri">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="30" />
+          <Property Name="Description" Type="nvarchar" MaxLength="30" />
+          <Property Name="HesapID" Type="int" />
+          <Property Name="KullaniciID" Type="int" />
+          <Property Name="Miktar" Type="int" />
+          <Property Name="KayitYapan" Type="nchar" MaxLength="30" />
+          <Property Name="KayitTarihi" Type="datetime" />
+          <Property Name="DegisiklikYapan" Type="nchar" MaxLength="30" />
+          <Property Name="DegisiklikTarihi" Type="datetime" />
+          <Property Name="HareketTuru" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Hesaplar">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="30" />
+          <Property Name="Description" Type="nvarchar" MaxLength="50" />
+          <Property Name="Miktar" Type="int" />
+          <Property Name="KullaniciID" Type="int" />
+          <Property Name="KayitTarihi" Type="datetime" />
+          <Property Name="KayitYapan" Type="nvarchar" MaxLength="50" />
+          <Property Name="DegisiklikYapan" Type="nchar" MaxLength="30" />
+          <Property Name="DegisiklikTarihi" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Kullanici">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KullaniciAdi" Type="nvarchar" MaxLength="50" />
+          <Property Name="Sifre" Type="nchar" MaxLength="10" />
+          <Property Name="KayitTarihi" Type="datetime" />
+          <Property Name="KayitYapan" Type="nvarchar" MaxLength="50" />
+          <Property Name="DegisiklikYapan" Type="nchar" MaxLength="30" />
+          <Property Name="DegisiklikTarihi" Type="datetime" />
+        </EntityType>
+        <Association Name="FK_HesapHareketleri_Hesaplar">
+          <End Role="Hesaplar" Type="Self.Hesaplar" Multiplicity="0..1" />
+          <End Role="HesapHareketleri" Type="Self.HesapHareketleri" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hesaplar">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="HesapHareketleri">
+              <PropertyRef Name="HesapID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HesapHareketleri_Kullanici">
+          <End Role="Kullanici" Type="Self.Kullanici" Multiplicity="0..1" />
+          <End Role="HesapHareketleri" Type="Self.HesapHareketleri" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kullanici">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="HesapHareketleri">
+              <PropertyRef Name="KullaniciID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Hesaplar_Kullanici">
+          <End Role="Kullanici" Type="Self.Kullanici" Multiplicity="0..1" />
+          <End Role="Hesaplar" Type="Self.Hesaplar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kullanici">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Hesaplar">
+              <PropertyRef Name="KullaniciID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EvButceRehberiModelStoreContainer">
+          <EntitySet Name="HesapHareketleri" EntityType="Self.HesapHareketleri" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Hesaplar" EntityType="Self.Hesaplar" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Kullanici" EntityType="Self.Kullanici" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_HesapHareketleri_Hesaplar" Association="Self.FK_HesapHareketleri_Hesaplar">
+            <End Role="Hesaplar" EntitySet="Hesaplar" />
+            <End Role="HesapHareketleri" EntitySet="HesapHareketleri" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HesapHareketleri_Kullanici" Association="Self.FK_HesapHareketleri_Kullanici">
+            <End Role="Kullanici" EntitySet="Kullanici" />
+            <End Role="HesapHareketleri" EntitySet="HesapHareketleri" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Hesaplar_Kullanici" Association="Self.FK_Hesaplar_Kullanici">
+            <End Role="Kullanici" EntitySet="Kullanici" />
+            <End Role="Hesaplar" EntitySet="Hesaplar" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="EvButceRehberiModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="HesapHareketleri">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="HesapID" Type="Int32" />
+          <Property Name="KullaniciID" Type="Int32" />
+          <Property Name="Miktar" Type="Int32" />
+          <Property Name="KayitYapan" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="KayitTarihi" Type="DateTime" Precision="3" />
+          <Property Name="DegisiklikYapan" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="DegisiklikTarihi" Type="DateTime" Precision="3" />
+          <Property Name="HareketTuru" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Hesaplar" Relationship="Self.FK_HesapHareketleri_Hesaplar" FromRole="HesapHareketleri" ToRole="Hesaplar" />
+          <NavigationProperty Name="Kullanici" Relationship="Self.FK_HesapHareketleri_Kullanici" FromRole="HesapHareketleri" ToRole="Kullanici" />
+        </EntityType>
+        <EntityType Name="Hesaplar">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Miktar" Type="Int32" />
+          <Property Name="KullaniciID" Type="Int32" />
+          <Property Name="KayitTarihi" Type="DateTime" Precision="3" />
+          <Property Name="KayitYapan" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DegisiklikYapan" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="DegisiklikTarihi" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="HesapHareketleri" Relationship="Self.FK_HesapHareketleri_Hesaplar" FromRole="Hesaplar" ToRole="HesapHareketleri" />
+          <NavigationProperty Name="Kullanici" Relationship="Self.FK_Hesaplar_Kullanici" FromRole="Hesaplar" ToRole="Kullanici" />
+        </EntityType>
+        <EntityType Name="Kullanici">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KullaniciAdi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Sifre" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="KayitTarihi" Type="DateTime" Precision="3" />
+          <Property Name="KayitYapan" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DegisiklikYapan" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="DegisiklikTarihi" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="HesapHareketleri" Relationship="Self.FK_HesapHareketleri_Kullanici" FromRole="Kullanici" ToRole="HesapHareketleri" />
+          <NavigationProperty Name="Hesaplar" Relationship="Self.FK_Hesaplar_Kullanici" FromRole="Kullanici" ToRole="Hesaplar" />
+        </EntityType>
+        <Association Name="FK_HesapHareketleri_Hesaplar">
+          <End Role="Hesaplar" Type="Self.Hesaplar" Multiplicity="0..1" />
+          <End Role="HesapHareketleri" Type="Self.HesapHareketleri" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hesaplar">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="HesapHareketleri">
+              <PropertyRef Name="HesapID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HesapHareketleri_Kullanici">
+          <End Role="Kullanici" Type="Self.Kullanici" Multiplicity="0..1" />
+          <End Role="HesapHareketleri" Type="Self.HesapHareketleri" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kullanici">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="HesapHareketleri">
+              <PropertyRef Name="KullaniciID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Hesaplar_Kullanici">
+          <End Role="Kullanici" Type="Self.Kullanici" Multiplicity="0..1" />
+          <End Role="Hesaplar" Type="Self.Hesaplar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kullanici">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Hesaplar">
+              <PropertyRef Name="KullaniciID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EvButceRehberiEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="HesapHareketleri" EntityType="Self.HesapHareketleri" />
+          <EntitySet Name="Hesaplar" EntityType="Self.Hesaplar" />
+          <EntitySet Name="Kullanici" EntityType="Self.Kullanici" />
+          <AssociationSet Name="FK_HesapHareketleri_Hesaplar" Association="Self.FK_HesapHareketleri_Hesaplar">
+            <End Role="Hesaplar" EntitySet="Hesaplar" />
+            <End Role="HesapHareketleri" EntitySet="HesapHareketleri" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HesapHareketleri_Kullanici" Association="Self.FK_HesapHareketleri_Kullanici">
+            <End Role="Kullanici" EntitySet="Kullanici" />
+            <End Role="HesapHareketleri" EntitySet="HesapHareketleri" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Hesaplar_Kullanici" Association="Self.FK_Hesaplar_Kullanici">
+            <End Role="Kullanici" EntitySet="Kullanici" />
+            <End Role="Hesaplar" EntitySet="Hesaplar" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="EvButceRehberiModelStoreContainer" CdmEntityContainer="EvButceRehberiEntities">
+          <EntitySetMapping Name="HesapHareketleri">
+            <EntityTypeMapping TypeName="EvButceRehberiModel.HesapHareketleri">
+              <MappingFragment StoreEntitySet="HesapHareketleri">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="HesapID" ColumnName="HesapID" />
+                <ScalarProperty Name="KullaniciID" ColumnName="KullaniciID" />
+                <ScalarProperty Name="Miktar" ColumnName="Miktar" />
+                <ScalarProperty Name="KayitYapan" ColumnName="KayitYapan" />
+                <ScalarProperty Name="KayitTarihi" ColumnName="KayitTarihi" />
+                <ScalarProperty Name="DegisiklikYapan" ColumnName="DegisiklikYapan" />
+                <ScalarProperty Name="DegisiklikTarihi" ColumnName="DegisiklikTarihi" />
+                <ScalarProperty Name="HareketTuru" ColumnName="HareketTuru" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Hesaplar">
+            <EntityTypeMapping TypeName="EvButceRehberiModel.Hesaplar">
+              <MappingFragment StoreEntitySet="Hesaplar">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Miktar" ColumnName="Miktar" />
+                <ScalarProperty Name="KullaniciID" ColumnName="KullaniciID" />
+                <ScalarProperty Name="KayitTarihi" ColumnName="KayitTarihi" />
+                <ScalarProperty Name="KayitYapan" ColumnName="KayitYapan" />
+                <ScalarProperty Name="DegisiklikYapan" ColumnName="DegisiklikYapan" />
+                <ScalarProperty Name="DegisiklikTarihi" ColumnName="DegisiklikTarihi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Kullanici">
+            <EntityTypeMapping TypeName="EvButceRehberiModel.Kullanici">
+              <MappingFragment StoreEntitySet="Kullanici">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="KullaniciAdi" ColumnName="KullaniciAdi" />
+                <ScalarProperty Name="Sifre" ColumnName="Sifre" />
+                <ScalarProperty Name="KayitTarihi" ColumnName="KayitTarihi" />
+                <ScalarProperty Name="KayitYapan" ColumnName="KayitYapan" />
+                <ScalarProperty Name="DegisiklikYapan" ColumnName="DegisiklikYapan" />
+                <ScalarProperty Name="DegisiklikTarihi" ColumnName="DegisiklikTarihi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
